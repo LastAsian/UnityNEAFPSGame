@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731715, g: 0.13414735, b: 0.121078536, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 13112943}
   - component: {fileID: 13112942}
   - component: {fileID: 13112941}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,8 +155,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2048175801}
-  m_Father: {fileID: 1377884909}
-  m_RootOrder: 2
+  m_Father: {fileID: 963194228}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -304,7 +304,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 13112940}
   m_Father: {fileID: 1377884909}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -405,8 +406,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1377884909}
-  - component: {fileID: 1377884908}
   - component: {fileID: 1377884910}
+  - component: {fileID: 1377884911}
   m_Layer: 0
   m_Name: Human_CT
   m_TagString: Untagged
@@ -414,18 +415,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1377884908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1377884907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c11031d414859a44f9bcfb73e0e96f51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1377884909
 Transform:
   m_ObjectHideFlags: 0
@@ -440,7 +429,6 @@ Transform:
   m_Children:
   - {fileID: 963194228}
   - {fileID: 1191464458}
-  - {fileID: 13112940}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -456,6 +444,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 024db74eac4e6c249a8304207cdfd7bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1377884911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377884907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0baae79c27bb1414299872fdd89c496d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LookSensitivity: 1
+  WebglLookSensitivityMultiplier: 0.25
+  TriggerAxisThreshold: 0.4
+  InvertYAxis: 0
+  InvertXAxis: 0
 --- !u!1 &1394515901
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,7 +540,7 @@ GameObject:
   - component: {fileID: 2048175801}
   - component: {fileID: 2048175803}
   - component: {fileID: 2048175802}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -559,8 +564,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 295}
-  m_SizeDelta: {x: -900, y: 50}
+  m_AnchoredPosition: {x: -79.89996, y: 297.7}
+  m_SizeDelta: {x: -740.2001, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2048175802
 MonoBehaviour:
