@@ -1,0 +1,52 @@
+{
+"keybinds" :{
+    "movement" : 
+        [
+            {"forward" : "w"},
+            {"left" : "a"},
+            {"backward" : "s"},
+            {"right" : "d"},
+            {"walk" : "shift"},
+            {"jump" : "space"},
+            {"duck" : "ctrl"}
+        ],
+    "weapon" :
+        [
+            {"use" : "e"},
+            {"fire" : "mouse1"},
+            {"secondaryfire" : "mouse2"},
+            {"reload" : "r"},
+            {"previousweapon" : "mwheelup"},
+            {"nextweapon" : "mwheeldown"},
+            {"lastweaponused" : ""},
+            {"dropweapon" : "g"},
+            {"inspectweapon" : "f"},
+            {"buymenu" : "b"},
+            {"primaryweapon" : "1"},
+            {"secondaryweapon" : "2"},
+            {"meleeweapon" : "3"},
+            {"cyclegrenades" : "4"},
+            {"device" : "5"},
+            {"HEgrenade" : ""},
+            {"flashbang" : ""},
+            {"smoke" : ""},
+            {"molotov" : ""},
+            {"decoygrenade" : ""}
+        ],
+    "ui" :
+        [
+            {"scoreboard" : "tab"},
+            {"chooseteam" : ""},
+            {"map" : "m"}
+
+        ],
+    "communication" :
+        [
+            {"togglemic" : "k"},
+            {"playerping" : "mouse3"},
+            {"radiomessage" : "z"},
+            {"chatmessage" : "y"},
+            {"teammessage" : "u"}
+        ]
+    }
+}
