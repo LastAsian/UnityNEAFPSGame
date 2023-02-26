@@ -5,6 +5,7 @@ using UnityEngine;
 public class MouseInput : MonoBehaviour
 {
     // unity variables
+    public GameObject Player;
     [Tooltip("Sensitivity multiplier for moving the camera around")]
     public float LookSensitivity = 1f;
 
