@@ -16,7 +16,7 @@ public class MouseInput : MonoBehaviour
     private GameObject Camera;
     [SerializeField]
     private InputActionReference Mouselook;
-    public float LookSensitivity = 10f;
+    public float LookSensitivity = 20f;
     public bool InvertYAxis = false;
     public bool InvertXAxis = false;
     // Start is called before the first frame update
@@ -47,12 +47,15 @@ public class MouseInput : MonoBehaviour
     {
         if (toggle)
         {
-            Screen.lockCursor = true;
+            //Screen.lockCursor = true;
+            // Locked : center of game view also hides cursor ; Confined : confined to window ; None
+            Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
         else
         {
-            Screen.lockCursor = false;
+            //Screen.lockCursor = false;
+            Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
     }

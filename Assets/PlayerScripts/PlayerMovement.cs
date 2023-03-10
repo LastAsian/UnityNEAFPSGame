@@ -13,26 +13,30 @@ public class PlayerMovement : MonoBehaviour
 
     //temp pub
     //start
+    public bool isground = false;
     //end
-    private float MaxSpeed = 333f*u;
+    private float MaxSpeed = 666f*u;
     private float MaxAccel;
     private float MinStopSpeedValue = 3f*u;
-    private float CardinalForceMagnitude = 666f*u;
     private float MinSpeed = 1f*u;
     private FrictionType[] BaseFriction;
 
     public GameObject player;
     public GameObject camera;
     public Rigidbody PhysPlayer;
+    public Collider Colide;
+    [SerializeField]
+    private PlayerInput PlayerInput;
     [SerializeField]
     private InputActionReference movement;
+    [SerializeField]
+    private InputActionReference Jump;
     
     private float rotation;
     private float AdditionalSpeed;
     private float CurrentSpeed;
     private float[] jumpBuffer;
     private Vector3 velocity; 
-    // create a mapping of the key binds from a json file [nofbinds (7), 2 (keycode)]
     
     // Start is called before the first frame update
     void Start()
@@ -42,16 +46,18 @@ public class PlayerMovement : MonoBehaviour
         BaseFriction = new FrictionType[2];
         BaseFriction[0].key = "Ground";
         BaseFriction[0].FrictionVal = 0.5f;
+        // call read file from config folder, if custom binds defined load custom file specified
 
+        // if not load default keybinds from json
     }
 
     // Update is called once per frame
     void Update()
     {
+        isground = false;
         //check if player is dead
 
-        //store input buffer
-        getInput();
+
         //get camera rotation X = Up and down and Y = Right and left (in degrees)
         // only need Y
 
@@ -59,9 +65,11 @@ public class PlayerMovement : MonoBehaviour
         rotation = player.transform.localRotation.eulerAngles.y;
         
         //call groundcheck
-        bool isGrounded = groundCheck();
+        isground = groundCheck();
+        //store input buffer
+        getInput();
         //if grounded should employ resistance or make sure max velocity is kept
-        if (isGrounded){
+        if (isground){
             // check if player is crouching
             GroundAccelerate(getwishdir(rotation));
         }
@@ -97,7 +105,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private bool groundCheck(){
-        return true;
+        Ray ray = new ray(transform.position, Vector3.down * 0.2f);
+        Physics.Raycast(ray, out RaycastHit hit);
+        if(hit.collider.tag == "ground") { return true; }
+        //return Physics.Raycast(transform.position, Vector3.down, 0.1f);
     }
 
     private void friction(ref UnityEngine.Vector3 velocity, FrictionType Friction)
@@ -143,11 +154,18 @@ public class PlayerMovement : MonoBehaviour
         return Wishdir;
     }
 
-    // for modifier e.g. shift walk, ctrl crouch, jump
-    private void getInput(){
-        
+    // for Modifier e.g. shift walk, ctrl crouch, jump
+    private void getInput()
+    {
+        if (PlayerInput.actions["Jump"].IsPressed() & isground){
+            PhysPlayer.velocity = new Vector3(0,100000,0);
+        }
     }
 
+    private void jump()
+    {
+
+    }
     private float clip(float value, float value_min, float value_max)
     {
         if (value < value_min){

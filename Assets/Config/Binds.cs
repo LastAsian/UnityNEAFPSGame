@@ -37,9 +37,9 @@ public partial class @Binds: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Movement"",
-                    ""type"": ""Value"",
-                    ""id"": ""b3ec8722-7813-43a4-b7a3-86f2ce225309"",
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""1861cf77-0e86-4bca-8ff9-8c6a7b2cca35"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -53,6 +53,33 @@ public partial class @Binds: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Fire"",
+                    ""type"": ""Button"",
+                    ""id"": ""162f2744-e671-4b07-bdca-b62b9d1885ec"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Alternative Fire"",
+                    ""type"": ""Button"",
+                    ""id"": ""ea492a5f-4c14-43a9-a6b9-e8c2b21d1d13"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""dfff2179-5a40-45cf-85d3-0ef53d9b3a7c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -124,34 +151,45 @@ public partial class @Binds: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""49135d82-2972-474b-840c-b508ee4268dc"",
+                    ""id"": ""03f12ce9-d054-4232-8e62-2ec211f54bca"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2bd82178-96ef-493a-a9db-387ecc791c6f"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Alternative Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0f1551cb-fb88-4a8f-b67b-deb95f069db4"",
                     ""path"": ""<Keyboard>/leftCtrl"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3ef9ad17-6e49-4d78-b32d-d9283296b619"",
+                    ""id"": ""505957cf-ab27-4953-b47b-37a4162ea45d"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7c831424-22d8-4368-90bd-1cb2929b0912"",
-                    ""path"": ""<Keyboard>/leftShift"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -163,8 +201,11 @@ public partial class @Binds: IInputActionCollection2, IDisposable
         // GameSpaceInput
         m_GameSpaceInput = asset.FindActionMap("GameSpaceInput", throwIfNotFound: true);
         m_GameSpaceInput_CardinalMovement = m_GameSpaceInput.FindAction("CardinalMovement", throwIfNotFound: true);
-        m_GameSpaceInput_Movement = m_GameSpaceInput.FindAction("Movement", throwIfNotFound: true);
+        m_GameSpaceInput_Jump = m_GameSpaceInput.FindAction("Jump", throwIfNotFound: true);
         m_GameSpaceInput_Pointer = m_GameSpaceInput.FindAction("Pointer", throwIfNotFound: true);
+        m_GameSpaceInput_Fire = m_GameSpaceInput.FindAction("Fire", throwIfNotFound: true);
+        m_GameSpaceInput_AlternativeFire = m_GameSpaceInput.FindAction("Alternative Fire", throwIfNotFound: true);
+        m_GameSpaceInput_Crouch = m_GameSpaceInput.FindAction("Crouch", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -227,15 +268,21 @@ public partial class @Binds: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_GameSpaceInput;
     private List<IGameSpaceInputActions> m_GameSpaceInputActionsCallbackInterfaces = new List<IGameSpaceInputActions>();
     private readonly InputAction m_GameSpaceInput_CardinalMovement;
-    private readonly InputAction m_GameSpaceInput_Movement;
+    private readonly InputAction m_GameSpaceInput_Jump;
     private readonly InputAction m_GameSpaceInput_Pointer;
+    private readonly InputAction m_GameSpaceInput_Fire;
+    private readonly InputAction m_GameSpaceInput_AlternativeFire;
+    private readonly InputAction m_GameSpaceInput_Crouch;
     public struct GameSpaceInputActions
     {
         private @Binds m_Wrapper;
         public GameSpaceInputActions(@Binds wrapper) { m_Wrapper = wrapper; }
         public InputAction @CardinalMovement => m_Wrapper.m_GameSpaceInput_CardinalMovement;
-        public InputAction @Movement => m_Wrapper.m_GameSpaceInput_Movement;
+        public InputAction @Jump => m_Wrapper.m_GameSpaceInput_Jump;
         public InputAction @Pointer => m_Wrapper.m_GameSpaceInput_Pointer;
+        public InputAction @Fire => m_Wrapper.m_GameSpaceInput_Fire;
+        public InputAction @AlternativeFire => m_Wrapper.m_GameSpaceInput_AlternativeFire;
+        public InputAction @Crouch => m_Wrapper.m_GameSpaceInput_Crouch;
         public InputActionMap Get() { return m_Wrapper.m_GameSpaceInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -248,12 +295,21 @@ public partial class @Binds: IInputActionCollection2, IDisposable
             @CardinalMovement.started += instance.OnCardinalMovement;
             @CardinalMovement.performed += instance.OnCardinalMovement;
             @CardinalMovement.canceled += instance.OnCardinalMovement;
-            @Movement.started += instance.OnMovement;
-            @Movement.performed += instance.OnMovement;
-            @Movement.canceled += instance.OnMovement;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
             @Pointer.started += instance.OnPointer;
             @Pointer.performed += instance.OnPointer;
             @Pointer.canceled += instance.OnPointer;
+            @Fire.started += instance.OnFire;
+            @Fire.performed += instance.OnFire;
+            @Fire.canceled += instance.OnFire;
+            @AlternativeFire.started += instance.OnAlternativeFire;
+            @AlternativeFire.performed += instance.OnAlternativeFire;
+            @AlternativeFire.canceled += instance.OnAlternativeFire;
+            @Crouch.started += instance.OnCrouch;
+            @Crouch.performed += instance.OnCrouch;
+            @Crouch.canceled += instance.OnCrouch;
         }
 
         private void UnregisterCallbacks(IGameSpaceInputActions instance)
@@ -261,12 +317,21 @@ public partial class @Binds: IInputActionCollection2, IDisposable
             @CardinalMovement.started -= instance.OnCardinalMovement;
             @CardinalMovement.performed -= instance.OnCardinalMovement;
             @CardinalMovement.canceled -= instance.OnCardinalMovement;
-            @Movement.started -= instance.OnMovement;
-            @Movement.performed -= instance.OnMovement;
-            @Movement.canceled -= instance.OnMovement;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
             @Pointer.started -= instance.OnPointer;
             @Pointer.performed -= instance.OnPointer;
             @Pointer.canceled -= instance.OnPointer;
+            @Fire.started -= instance.OnFire;
+            @Fire.performed -= instance.OnFire;
+            @Fire.canceled -= instance.OnFire;
+            @AlternativeFire.started -= instance.OnAlternativeFire;
+            @AlternativeFire.performed -= instance.OnAlternativeFire;
+            @AlternativeFire.canceled -= instance.OnAlternativeFire;
+            @Crouch.started -= instance.OnCrouch;
+            @Crouch.performed -= instance.OnCrouch;
+            @Crouch.canceled -= instance.OnCrouch;
         }
 
         public void RemoveCallbacks(IGameSpaceInputActions instance)
@@ -287,7 +352,10 @@ public partial class @Binds: IInputActionCollection2, IDisposable
     public interface IGameSpaceInputActions
     {
         void OnCardinalMovement(InputAction.CallbackContext context);
-        void OnMovement(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
         void OnPointer(InputAction.CallbackContext context);
+        void OnFire(InputAction.CallbackContext context);
+        void OnAlternativeFire(InputAction.CallbackContext context);
+        void OnCrouch(InputAction.CallbackContext context);
     }
 }

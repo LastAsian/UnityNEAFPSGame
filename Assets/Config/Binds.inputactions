@@ -15,9 +15,9 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Movement",
-                    "type": "Value",
-                    "id": "b3ec8722-7813-43a4-b7a3-86f2ce225309",
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "1861cf77-0e86-4bca-8ff9-8c6a7b2cca35",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -31,6 +31,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Fire",
+                    "type": "Button",
+                    "id": "162f2744-e671-4b07-bdca-b62b9d1885ec",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Alternative Fire",
+                    "type": "Button",
+                    "id": "ea492a5f-4c14-43a9-a6b9-e8c2b21d1d13",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Crouch",
+                    "type": "Button",
+                    "id": "dfff2179-5a40-45cf-85d3-0ef53d9b3a7c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -102,34 +129,45 @@
                 },
                 {
                     "name": "",
-                    "id": "49135d82-2972-474b-840c-b508ee4268dc",
+                    "id": "03f12ce9-d054-4232-8e62-2ec211f54bca",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2bd82178-96ef-493a-a9db-387ecc791c6f",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Alternative Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0f1551cb-fb88-4a8f-b67b-deb95f069db4",
                     "path": "<Keyboard>/leftCtrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "Crouch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "3ef9ad17-6e49-4d78-b32d-d9283296b619",
+                    "id": "505957cf-ab27-4953-b47b-37a4162ea45d",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "7c831424-22d8-4368-90bd-1cb2929b0912",
-                    "path": "<Keyboard>/leftShift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
