@@ -10,13 +10,15 @@ using UnityEngine.InputSystem;
 public class MouseInput : MonoBehaviour
 {
     // unity variables
-    public GameObject Player;
+    [SerializeField]
+    private GameObject Player;
+    [SerializeField]
+    private GameObject Camera;
     [SerializeField]
     private InputActionReference Mouselook;
-    public float LookSensitivity = 1f;
+    public float LookSensitivity = 10f;
     public bool InvertYAxis = false;
     public bool InvertXAxis = false;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +29,28 @@ public class MouseInput : MonoBehaviour
     void Update()
     {
         Vector2 rawMouse = Mouselook.action.ReadValue<Vector2>();
-        rawMouse *= LookSensitivity;
-        //Player.Transform.Rotate();
+        rawMouse *= LookSensitivity * Time.deltaTime;
+        Player.transform.Rotate(0,rawMouse.x,0);
+        float rotation = Camera.transform.localRotation.eulerAngles.x;
+        rotation %= 360f;
+        if(rotation >= 180f){
+            rotation -= 360f;
+        }
+        if((rotation - rawMouse.y <= 90f) && (rotation - rawMouse.y >= -90f))
+            Camera.transform.Rotate(-rawMouse.y,0,0);
+
+    }
+
+    private float clip(float value, float value_min, float value_max)
+    {
+        if (value < value_min){
+            return value_min;
+        }
+        else if (value > value_min){
+            return value_max;
+        }
+        else{
+            return value;
+        }
     }
 }

@@ -9,15 +9,14 @@ struct FrictionType {
 
 public class PlayerMovement : MonoBehaviour
 {
-    private const float u = 0.0001f;
+    private const float u = 1f;
 
     //temp pub
     //start
     //end
-
-    private float MaxSpeed = 3200f*u;
-    private float MinStopSpeedValue = 1000f*u;
-    private float CardinalForceMagnitude = 1000000f*u;
+    private float MaxSpeed = 320f*u;
+    private float MinStopSpeedValue = 10f*u;
+    private float CardinalForceMagnitude = 500f*u;
     private float MaxAccel;
     private FrictionType[] BaseFriction;
 
@@ -78,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 RigidbodyVel = PhysPlayer.velocity;
         CurrentSpeed = dot(ref RigidbodyVel, ref wishdir);
-        AdditionalSpeed = clip(MaxSpeed - CurrentSpeed, 0, MaxAccel * (1/Time.deltaTime));
+        AdditionalSpeed = clip(MaxSpeed - CurrentSpeed, 0, MaxAccel * Time.deltaTime);
         PhysPlayer.velocity = RigidbodyVel + AdditionalSpeed * wishdir;
     }
 
@@ -88,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
         // call friction
         friction(ref RigidbodyVel, BaseFriction[0]);
         CurrentSpeed = dot(ref RigidbodyVel, ref wishdir);
-        AdditionalSpeed = clip(MaxSpeed - CurrentSpeed, 0, MaxAccel * 1/Time.deltaTime) * u;
+        AdditionalSpeed = clip(MaxSpeed - CurrentSpeed, 0, MaxAccel * Time.deltaTime) * u;
         PhysPlayer.velocity = RigidbodyVel + AdditionalSpeed * wishdir;
     }
 
@@ -117,6 +116,14 @@ public class PlayerMovement : MonoBehaviour
         Vector2 rawWishdir = movement.action.ReadValue<Vector2>();
         Vector3 Wishdir = new Vector3 (rawWishdir.x, 0, rawWishdir.y);
         Wishdir.Normalize();
+        // get object rotation
+        //rotation = Player.transform.localRotation.eulerAngles.y;
+        rotation %= 360f;
+        if(rotation >= 180f){
+            rotation -= 360f;
+        }
+        // rotate vector by object rotation
+        Wishdir = Quaternion.Euler(0,rotation,0) * Wishdir;
         Wishdir *= CardinalForceMagnitude;
         return Wishdir;
     }
