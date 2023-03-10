@@ -28,6 +28,8 @@ public class MouseInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // if input is grabbed lock cursor and hide
+        grabInput(true);
         Vector2 rawMouse = Mouselook.action.ReadValue<Vector2>();
         rawMouse *= LookSensitivity * Time.deltaTime;
         Player.transform.Rotate(0,rawMouse.x,0);
@@ -41,6 +43,19 @@ public class MouseInput : MonoBehaviour
 
     }
 
+    void grabInput(bool toggle)
+    {
+        if (toggle)
+        {
+            Screen.lockCursor = true;
+            Cursor.visible = false;
+        }
+        else
+        {
+            Screen.lockCursor = false;
+            Cursor.visible = true;
+        }
+    }
     private float clip(float value, float value_min, float value_max)
     {
         if (value < value_min){

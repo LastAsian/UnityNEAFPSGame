@@ -31,6 +31,10 @@ public class PlayerLogic : MonoBehaviour
         if(Physics.Raycast(ray, out hitData))
         {
             // casted ray collided with something
+            
+            //if ray hits a wall mesh call function
+            
+            //if ray hits player, query for what part and what damage, call corresponding function
 
         }
     }

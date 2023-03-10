@@ -9,15 +9,16 @@ struct FrictionType {
 
 public class PlayerMovement : MonoBehaviour
 {
-    private const float u = 1f;
+    private const float u = 0.05f;
 
     //temp pub
     //start
     //end
-    private float MaxSpeed = 320f*u;
-    private float MinStopSpeedValue = 10f*u;
-    private float CardinalForceMagnitude = 500f*u;
+    private float MaxSpeed = 333f*u;
     private float MaxAccel;
+    private float MinStopSpeedValue = 3f*u;
+    private float CardinalForceMagnitude = 666f*u;
+    private float MinSpeed = 1f*u;
     private FrictionType[] BaseFriction;
 
     public GameObject player;
@@ -37,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         jumpBuffer = new float[5];
-        MaxAccel = 10 * MaxSpeed;
+        MaxAccel = 2 * MaxSpeed;
         BaseFriction = new FrictionType[2];
         BaseFriction[0].key = "Ground";
         BaseFriction[0].FrictionVal = 0.5f;
@@ -47,6 +48,8 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //check if player is dead
+
         //store input buffer
         getInput();
         //get camera rotation X = Up and down and Y = Right and left (in degrees)
@@ -77,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 RigidbodyVel = PhysPlayer.velocity;
         CurrentSpeed = dot(ref RigidbodyVel, ref wishdir);
-        AdditionalSpeed = clip(MaxSpeed - CurrentSpeed, 0, MaxAccel * Time.deltaTime);
+        AdditionalSpeed = clip(MaxAccel * Time.deltaTime, 0, MaxSpeed - CurrentSpeed);
         PhysPlayer.velocity = RigidbodyVel + AdditionalSpeed * wishdir;
     }
 
@@ -87,7 +90,9 @@ public class PlayerMovement : MonoBehaviour
         // call friction
         friction(ref RigidbodyVel, BaseFriction[0]);
         CurrentSpeed = dot(ref RigidbodyVel, ref wishdir);
-        AdditionalSpeed = clip(MaxSpeed - CurrentSpeed, 0, MaxAccel * Time.deltaTime) * u;
+        AdditionalSpeed = clip(MaxAccel * Time.deltaTime, 0, MaxSpeed - CurrentSpeed);
+        // don't need to calculate if 0, early exit
+        if(AdditionalSpeed == 0) {return;}
         PhysPlayer.velocity = RigidbodyVel + AdditionalSpeed * wishdir;
     }
 
@@ -97,19 +102,30 @@ public class PlayerMovement : MonoBehaviour
 
     private void friction(ref UnityEngine.Vector3 velocity, FrictionType Friction)
     {
-        float speedafterfriction, initialspeed, control;
-        initialspeed = Mathf.Sqrt(Mathf.Pow(velocity.x,2) + Mathf.Pow(velocity.y,2) + Mathf.Pow(velocity.z,2));
-        if (initialspeed == 0) {return;}
-        control = (initialspeed < MinStopSpeedValue) ? MinStopSpeedValue : initialspeed;
-        speedafterfriction = initialspeed - (Friction.FrictionVal * control);
-        if (speedafterfriction < 0){
-            speedafterfriction = 0;
+        float speedafterfriction, speed, control, drop;
+        drop = 0;
+        // get vector length
+        speed = Mathf.Sqrt(Mathf.Pow(velocity.x,2) + Mathf.Pow(velocity.y,2) + Mathf.Pow(velocity.z,2));
+        // early exit
+        if (speed == 0) {return;}
+        // check if speed below min speed threshold value e.g. if too slow
+        if (speed < MinSpeed) {velocity *= 0; return;}
+        control = (speed < MinStopSpeedValue) ? MinStopSpeedValue : speed;
+        drop = speed - (Friction.FrictionVal * control) * Time.deltaTime;
+        // scale velocity
+        speedafterfriction = speed - drop;
+        // make sure friction only opposes current movement
+        if (speedafterfriction < 0){ speedafterfriction = 0; }
+        if (speedafterfriction != speed)
+        {
+            // scale speed
+            speedafterfriction /= speed;
+            // scale velocity
+            velocity *= speedafterfriction;
         }
-        speedafterfriction /= initialspeed;
-        velocity *= speedafterfriction;
     }
 
-    // returns a vector with magnitude CardinalForceMagnitude in the direction of the player's movement keys
+    // return a normalized vector in the direction of the player's movement keys
     private UnityEngine.Vector3 getwishdir(float rotation)
     {
         //gives raw wishdir from keyboard input
@@ -124,7 +140,6 @@ public class PlayerMovement : MonoBehaviour
         }
         // rotate vector by object rotation
         Wishdir = Quaternion.Euler(0,rotation,0) * Wishdir;
-        Wishdir *= CardinalForceMagnitude;
         return Wishdir;
     }
 
